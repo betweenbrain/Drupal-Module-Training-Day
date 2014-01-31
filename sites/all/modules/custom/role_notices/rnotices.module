@@ -147,7 +147,7 @@ function rnotices_user_view($account, $view_mode, $langcode)
 }
 
 /**
- * Implements hook_theme().
+ * Implements hook_theme() to override display
  *
  * Tell Drupal what theme functions this module defines
  *
