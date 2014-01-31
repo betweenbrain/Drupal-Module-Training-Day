@@ -9,6 +9,8 @@
  *  http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_permission/7
  * @return array An array of valid permissions for the module_name module
  */
+
+// t() is translate function, like JText()
 function rnotices_permission()
 {
 	return array(
