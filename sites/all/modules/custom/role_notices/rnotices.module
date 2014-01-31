@@ -56,6 +56,9 @@ function rnotices_settings($form, &$form_state)
 	$roles                  = user_roles(true);
 	$form['rnotices_texts'] = array(
 		'#tree' => true, // property tree defines that submitted data is stored as an array
+		'#type' => 'fieldset',
+		'#title' => t('This is a fieldset'),
+		'#description' => t('Some description')
 	);
 	foreach ($roles as $rid => $role)
 	{
