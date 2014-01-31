@@ -2,7 +2,6 @@
 /**
  * @file
  * Allows setting notices for specific roles
- * version 7.demo.2
  */
 /**
  * Implements hook_permission().
@@ -24,7 +23,6 @@ function rnotices_permission()
  * Implementationation of hook_menu().
  *
  * http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_menu/7
- * ***You clear the menu cache after you make changes to this function
  */
 function rnotices_menu()
 {
@@ -51,45 +49,21 @@ function rnotices_menu()
  */
 function rnotices_settings($form, &$form_state)
 {
-	// Default value is now an array as we have multiple textareas
 	$notices                = variable_get('rnotices_texts', array());
 	$roles                  = user_roles(true);
 	$form['rnotices_texts'] = array(
-		'#tree' => true, // property tree defines that submitted data is stored as an array
-		'#type' => 'fieldset',
-		'#title' => t('This is a fieldset'),
-		'#description' => t('Some description')
+		'#tree' => true,
 	);
 	foreach ($roles as $rid => $role)
 	{
 		$form['rnotices_texts'][$rid] = array(
 			'#type'          => 'textarea',
-			'#title'         => t('Notice for @role', array('@role' => $role)), // defines @role as a dynamic variable matching $role
+			'#title'         => t('Notice for @role', array('@role' => $role)),
 			'#default_value' => isset($notices[$rid]) ? $notices[$rid] : '',
 		);
 	}
 
-	$form['submit'] = array(
-		'#type'  => 'submit',
-		'#value' => 'Save Notices',
-	);
-
-	return $form;
-}
-
-/**
- * Submit callback for rnotices_settings form
- *
- * This function is automatically called because it is named with
- * "_sumbit" appended to the "rnotices_settings" function name
- *
- * @param $form
- * @param $form_state
- */
-function rnotices_settings_submit($form, &$form_state)
-{
-	$notices = $form_state['values']['rnotices_texts'];
-	// Uncomment and enable devel to see what values are available from submitted form.
-	//dpm($form_state['values'], '$form_state[values]');
-	variable_set('rnotices_texts', $notices);
+	// system_settings_form - will default buttons and
+	// Drupal will will handle the submiting of the form automatically
+	return system_settings_form($form);
 }
