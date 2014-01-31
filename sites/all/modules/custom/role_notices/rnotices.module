@@ -63,6 +63,7 @@ function rnotices_settings_page()
  */
 function rnotices_settings($form, &$form_state)
 {
+	// variable_get is a database call to load the variable table
 	$text                   = variable_get('rnotices_texts', '');
 	// #properties apply to rnotices_texts element
 	$form['rnotices_texts'] = array(
