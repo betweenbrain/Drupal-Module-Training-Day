@@ -19,18 +19,46 @@ function rnotices_menu()
 	$items['admin/people/rnotices'] = array(
 		'title'            => 'Role Notices',
 		'type'             => MENU_LOCAL_TASK,
-		'page callback'    => 'rnotices_page',
+		'page callback'    => 'drupal_get_form',
 		'access arguments' => array('administer role notices'),
 	);
 
 	return $items;
 }
 
-
-/**
- * Demo page
- */
-function rnotices_page()
+function rnotices_settings($form, &$form_state)
 {
-	return 'Something witty';
+	$text                       = variable_get('rnotices_value', '');
+	$form['rnotices_all_roles'] = array(
+		'#type'          => 'textarea',
+		'#title'         => t('Notice for ALL roles'),
+		'#default_value' => $text ? $text : 'Default value',
+		'#description'   => t('Enter the text here!'),
+	);
+
+
+	$form['submit'] = array(
+		'#type'  => 'submit',
+		'#value' => 'Save Notices',
+	);
+
+	return $form;
+}
+
+
+/*
+ * Page Callback for Settings form
+*/
+function rnotices_settings_page()
+{
+	$form = drupal_get_form('rnotices_settings');
+
+	return $form;
+}
+
+function rnotices_settings_submit($form, &$form_state)
+{
+	$text = $form_state['values']['rnotices_all_roles'];
+	drupal_set_message(t('You entered') . ' ' . $text);
+	variable_set('rnotices_value', $text);
 }
