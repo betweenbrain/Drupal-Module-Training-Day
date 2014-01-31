@@ -9,34 +9,39 @@
  *  http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_permission/7
  * @return array An array of valid permissions for the module_name module
  */
-function rnotices_permission() {
-  return array(
-    'administer role notices' => array(
-      'title' => t('Administer Role Notices'),
-      'description' => t('Allows the user to set messages for all roles'),
-  ),
-  );
+function rnotices_permission()
+{
+	return array(
+		'administer role notices' => array(
+			'title'       => t('Administer Role Notices'),
+			'description' => t('Allows the user to set messages for all roles'),
+		),
+	);
 }
+
 /**
  * Implementationation of hook_menu().
- * 
+ *
  * http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_menu/7
  */
-function rnotices_menu() {
-  $items['admin/people/rnotices'] = array(
-    'title' => 'Role Notices', 
-    'page callback' => 'rnotices_page', 
-    'access callback' => 'user_access',
-    'access arguments' => array('administer role notices'), 
-    'type' => MENU_LOCAL_TASK,
-  );
+function rnotices_menu()
+{
+	$items['admin/people/rnotices'] = array(
+		'title'            => 'Role Notices',
+		'page callback'    => 'rnotices_page',
+		'access callback'  => 'user_access',
+		'access arguments' => array('administer role notices'),
+		'type'             => MENU_LOCAL_TASK,
+	);
 
 
-  return $items;
+	return $items;
 }
+
 /**
  * Demo page
  */
-function rnotices_page() {
-  return "Page Text";
+function rnotices_page()
+{
+	return "Page Text";
 }
