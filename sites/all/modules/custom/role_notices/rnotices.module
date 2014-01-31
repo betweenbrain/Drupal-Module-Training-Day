@@ -67,3 +67,63 @@ function rnotices_settings($form, &$form_state)
 	// Drupal will will handle the submiting of the form automatically
 	return system_settings_form($form);
 }
+
+/**
+ * @return array An array of notices for the current user. keyed by role id(rid)
+ */
+function _rnotices_get_notices()
+{
+	global $user;
+	$all_notices  = variable_get('rnotices_texts', array());
+	$user_notices = array_intersect_key($all_notices, $user->roles);
+	foreach ($user_notices as &$notice)
+	{
+		$notice = check_plain($notice);
+	}
+
+	return $user_notices;
+}
+
+/**
+ * Implements hook_block_info().
+ *
+ * Allows the module to define blocks
+ *
+ * @return array Block keyed by delta strings
+ */
+function rnotices_block_info()
+{
+	$blocks['rnotices_mine'] = array(
+		'info' => t('Role Notices'),
+	);
+
+	return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ *
+ * This hook is called to display a block
+ *
+ * @param string $delta
+ *   key to determine which block should be displayed
+ *
+ * @return array
+ */
+function rnotices_block_view($delta = '')
+{
+	switch ($delta)
+	{
+		case 'rnotices_mine':
+			$notices = _rnotices_get_notices();
+			//use "theme" function get rendered HTML list -- themes can override this
+			//***also I don't put in HTML in the module
+			$themed_notice_list = theme('item_list', array('items' => $notices));
+
+			return array(
+				'subject' => t('Notices'),
+				'content' => $themed_notice_list,
+			);
+			break;
+	}
+}
