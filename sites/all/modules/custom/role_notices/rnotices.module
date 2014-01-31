@@ -118,6 +118,7 @@ function rnotices_block_view($delta = '') // Delta is the block being viewed, te
 			$notices = _rnotices_get_notices();
 			//use "theme" function get rendered HTML list -- themes can override this
 			//***also I don't put in HTML in the module
+			// Calls includes/theme.inc:2082 and hands off data
 			$themed_notice_list = theme('item_list', array('items' => $notices));
 
 			return array(
