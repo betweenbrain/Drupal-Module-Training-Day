@@ -1,0 +1,17 @@
+<?php 
+
+/**
+ * Implements hook_rnotices_notices_alter().
+ * @param array $notices
+ */
+function rnotices_weight_rnotices_notices_alter(&$notices){
+  $heaviest_weight = -1;
+  foreach ($notices as $rid => $notice_text){
+    $role = user_role_load($rid);
+    if ($role->weight > $heaviest_weight) {
+    	$most_important_message = array($rid => $notice_text);
+    	$heaviest_weight = $role->weight;
+    }
+  }
+  $notices = $most_important_message;
+}

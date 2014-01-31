@@ -71,16 +71,14 @@ function rnotices_settings($form, &$form_state)
 /**
  * @return array An array of notices for the current user. keyed by role id(rid)
  */
-function _rnotices_get_notices() // leading underscore ensures that function won't be called accidentally as a hook
+function _rnotices_get_notices()
 {
 	global $user;
-	$all_notices = variable_get('rnotices_texts', array());
-	foreach ($all_notices as &$notice)
-	{
-		$notice = check_plain($notice);
-	}
+	$all_notices  = variable_get('rnotices_texts', array());
+	$user_notices = array_intersect_key($all_notices, $user->roles);
+	drupal_alter('rnotices_notices', $user_notices);
 
-	return array_intersect_key($all_notices, $user->roles);
+	return $user_notices;
 }
 
 /**
@@ -119,7 +117,7 @@ function rnotices_block_view($delta = '')
 
 			return array(
 				'subject' => t('Notices'),
-				'content' => theme('rnotices_display', array('notices' => $notices)), // rnotices_display overriden at sites/all/themes/demo/template.php:2
+				'content' => theme('rnotices_display', array('notices' => $notices)),
 			);
 			break;
 	}
@@ -139,15 +137,13 @@ function rnotices_user_view($account, $view_mode, $langcode)
 		//another way to return "renderable array"
 		//#theme tells drupal which theme function to call - other properties pass as "$variables"
 		$account->content['rnotices'] = array(
-			'#theme'   => 'rnotices_display',
-			'#notices' => $notices,
-			'#title'   => t('Notices'),
+			'#markup' => theme('rnotices_display', array('notices' => $notices)),
 		);
 	}
 }
 
 /**
- * Implements hook_theme() to override display
+ * Implements hook_theme().
  *
  * Tell Drupal what theme functions this module defines
  *
@@ -163,7 +159,7 @@ function rnotices_theme($existing, $type, $theme, $path)
 {
 	return array(
 		'rnotices_display' => array(
-			'variables' => array('notices' => array(), 'title' => null)
+			'arguments' => array('notices' => array())
 		)
 	);
 }
@@ -181,5 +177,5 @@ function rnotices_theme($existing, $type, $theme, $path)
  */
 function theme_rnotices_display($variables)
 {
-	return theme('item_list', array('items' => $variables['notices'], 'title' => $variables['title']));
+	return theme('item_list', array('items' => $variables['notices']));
 }
