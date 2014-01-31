@@ -21,6 +21,7 @@ function rnotices_menu()
 		'type'             => MENU_LOCAL_TASK,
 		'page callback'    => 'drupal_get_form',
 		'access arguments' => array('administer role notices'),
+		'page arguments' => array('rnotices_settings')
 	);
 
 	return $items;
@@ -41,17 +42,6 @@ function rnotices_settings($form, &$form_state)
 		'#type'  => 'submit',
 		'#value' => 'Save Notices',
 	);
-
-	return $form;
-}
-
-
-/*
- * Page Callback for Settings form
-*/
-function rnotices_settings_page()
-{
-	$form = drupal_get_form('rnotices_settings');
 
 	return $form;
 }
