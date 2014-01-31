@@ -1,0 +1,36 @@
+<?php /**
+ * Implements hook_permission().
+ */
+function rnotices_permission()
+{
+	return array(
+		'administer role notices' => array(
+			'title'       => t('Role Notices'),
+			'description' => t('Something witty goes here.')
+		),
+	);
+}
+
+/**
+ * Implements hook_menu().
+ */
+function rnotices_menu()
+{
+	$items['admin/people/rnotices'] = array(
+		'title'            => 'Role Notices',
+		'type'             => MENU_LOCAL_TASK,
+		'page callback'    => 'rnotices_page',
+		'access arguments' => array('administer role notices'),
+	);
+
+	return $items;
+}
+
+
+/**
+ * Demo page
+ */
+function rnotices_page()
+{
+	return 'Something witty';
+}
