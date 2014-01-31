@@ -35,9 +35,9 @@ function rnotices_menu()
 	// key of array tells drupal URL that I want to contol
 	$items['admin/people/rnotices'] = array(
 		'title'            => 'Role Notices',
-		'page callback'    => 'rnotices_page',
-		'access callback'  => 'user_access',
-		'access arguments' => array('administer role notices'),
+		'page callback'    => 'rnotices_page', // name of function to pass control back to
+		'access callback'  => 'user_access', // true / false current user can or cannot access page
+		'access arguments' => array('administer role notices'), // specific permission to check (sites/all/modules/custom/role_notices/rnotices.module:17)  before page callback
 		'type'             => MENU_LOCAL_TASK,
 	);
 
