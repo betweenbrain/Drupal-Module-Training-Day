@@ -71,7 +71,7 @@ function rnotices_settings($form, &$form_state)
 /**
  * @return array An array of notices for the current user. keyed by role id(rid)
  */
-function _rnotices_get_notices()
+function _rnotices_get_notices() // leading underscore ensures that function won't be called accidentally as a hook
 {
 	global $user;
 	$all_notices = variable_get('rnotices_texts', array());
@@ -119,7 +119,7 @@ function rnotices_block_view($delta = '')
 
 			return array(
 				'subject' => t('Notices'),
-				'content' => theme('rnotices_display', array('notices' => $notices)),
+				'content' => theme('rnotices_display', array('notices' => $notices)), // rnotices_display overriden at sites/all/themes/demo/template.php:2
 			);
 			break;
 	}
