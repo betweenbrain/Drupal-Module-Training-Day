@@ -61,7 +61,7 @@ function rnotices_settings($form, &$form_state)
 	{
 		$form['rnotices_texts'][$rid] = array(
 			'#type'          => 'textarea',
-			'#title'         => t('Notice for @role', array('@role' => $role)),
+			'#title'         => t('Notice for @role', array('@role' => $role)), // defines @role as a dynamic variable matching $role
 			'#default_value' => isset($notices[$rid]) ? $notices[$rid] : '',
 		);
 	}
