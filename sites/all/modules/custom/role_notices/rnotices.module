@@ -45,6 +45,7 @@ function rnotices_menu()
 function rnotices_settings_page()
 {
 	// @see http://api.drupal.org/api/drupal/includes%21form.inc/function/drupal_get_form/7
+	// Calls rnotices_settings()
 	$form = drupal_get_form('rnotices_settings');
 
 	return $form;
@@ -63,6 +64,7 @@ function rnotices_settings_page()
 function rnotices_settings($form, &$form_state)
 {
 	$text                   = variable_get('rnotices_texts', '');
+	// #properties apply to rnotices_texts element
 	$form['rnotices_texts'] = array(
 		'#type'          => 'textarea',
 		'#title'         => t('Notice for ALL roles'),
