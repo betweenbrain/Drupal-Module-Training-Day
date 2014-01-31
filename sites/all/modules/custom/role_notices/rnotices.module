@@ -10,60 +10,67 @@
  *  http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_permission/7
  * @return array An array of valid permissions for the module_name module
  */
-function rnotices_permission() {
-  return array(
-    'administer role notices' => array(
-      'title' => t('Administer Role Notices'),
-      'description' => t('Allows the user to set messages for all roles'),
-  ),
-  );
+function rnotices_permission()
+{
+	return array(
+		'administer role notices' => array(
+			'title'       => t('Administer Role Notices'),
+			'description' => t('Allows the user to set messages for all roles'),
+		),
+	);
 }
+
 /**
  * Implementationation of hook_menu().
- * 
+ *
  * http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_menu/7
  * ***You clear the menu cache after you make changes to this function
  */
-function rnotices_menu() {
-  $items['admin/people/rnotices'] = array(
-    'title' => 'Role Notices', 
-    'page callback' => 'drupal_get_form', 
-    'page arguments' => array('rnotices_settings'),
-    'access arguments' => array('administer role notices'), 
-    'type' => MENU_LOCAL_TASK,
-  );
+function rnotices_menu()
+{
+	$items['admin/people/rnotices'] = array(
+		'title'            => 'Role Notices',
+		'page callback'    => 'drupal_get_form',
+		'page arguments'   => array('rnotices_settings'),
+		'access arguments' => array('administer role notices'),
+		'type'             => MENU_LOCAL_TASK,
+	);
 
 
-  return $items;
+	return $items;
 }
+
 /**
  * Settings form
  * Admin may enter role notices
- * 
+ *
  * @param array $form
  * @param array $form_state
+ *
  * @return array
  */
-function rnotices_settings($form, &$form_state) {
-  $notices = variable_get('rnotices_texts',array());
-  $roles = user_roles(TRUE);
-  $form['rnotices_texts'] = array(
-    '#tree' => TRUE,
-  );
-  foreach ($roles as $rid => $role){
-    $form['rnotices_texts'][$rid] = array(
-      '#type' => 'textarea',
-      '#title' => t('Notice for @role', array('@role' => $role)),
-      '#default_value' => isset($notices[$rid])?$notices[$rid]:'',
-    );
-  }
-   
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value'=> 'Save Notices', 
-  );
-  
-  return $form;
+function rnotices_settings($form, &$form_state)
+{
+	$notices                = variable_get('rnotices_texts', array());
+	$roles                  = user_roles(true);
+	$form['rnotices_texts'] = array(
+		'#tree' => true,
+	);
+	foreach ($roles as $rid => $role)
+	{
+		$form['rnotices_texts'][$rid] = array(
+			'#type'          => 'textarea',
+			'#title'         => t('Notice for @role', array('@role' => $role)),
+			'#default_value' => isset($notices[$rid]) ? $notices[$rid] : '',
+		);
+	}
+
+	$form['submit'] = array(
+		'#type'  => 'submit',
+		'#value' => 'Save Notices',
+	);
+
+	return $form;
 }
 
 /**
@@ -71,12 +78,14 @@ function rnotices_settings($form, &$form_state) {
  *
  * This function is automatically called because it is named with
  * "_sumbit" appended to the "rnotices_settings" function name
+ *
  * @param $form
  * @param $form_state
  */
-function rnotices_settings_submit($form, &$form_state) {
-  $notices = $form_state['values']['rnotices_texts'];
-  // Uncomment and enable devel to see what values are available from submitted form.
-  //dpm($form_state['values'], '$form_state[values]');
-  variable_set('rnotices_texts',$notices);
+function rnotices_settings_submit($form, &$form_state)
+{
+	$notices = $form_state['values']['rnotices_texts'];
+	// Uncomment and enable devel to see what values are available from submitted form.
+	//dpm($form_state['values'], '$form_state[values]');
+	variable_set('rnotices_texts', $notices);
 }
