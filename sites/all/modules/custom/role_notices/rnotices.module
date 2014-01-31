@@ -18,6 +18,10 @@ function rnotices_permission()
 			'title'       => t('Administer Role Notices'),
 			'description' => t('Allows the user to set messages for all roles'),
 		),
+		'other permission' => array(
+			'title' => t('Other permission'),
+			'description' => t('Just an example'),
+		)
 	);
 }
 
