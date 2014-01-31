@@ -10,13 +10,14 @@
  *  http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_permission/7
  * @return array An array of valid permissions for the module_name module
  */
-function rnotices_permission() {
-  return array(
-    'administer role notices' => array(
-      'title' => t('Administer Role Notices'),
-      'description' => t('Allows the user to set messages for all roles'),
-    ),
-  );
+function rnotices_permission()
+{
+	return array(
+		'administer role notices' => array(
+			'title'       => t('Administer Role Notices'),
+			'description' => t('Allows the user to set messages for all roles'),
+		),
+	);
 }
 
 /**
@@ -25,25 +26,28 @@ function rnotices_permission() {
  * http://api.drupal.org/api/drupal/modules--system--system.api.php/function/hook_menu/7
  * ***You have to clear the menu cache after you make changes to this function
  */
-function rnotices_menu() {
-  $items['admin/people/rnotices'] = array(
-    'title' => 'Role Notices',
-    'page callback' => 'rnotices_settings_page',
-    'access arguments' => array('administer role notices'),
-    'type' => MENU_LOCAL_TASK,
-  );
+function rnotices_menu()
+{
+	$items['admin/people/rnotices'] = array(
+		'title'            => 'Role Notices',
+		'page callback'    => 'rnotices_settings_page',
+		'access arguments' => array('administer role notices'),
+		'type'             => MENU_LOCAL_TASK,
+	);
 
 
-  return $items;
+	return $items;
 }
 
 /*
  * Page Callback for Settings form
 */
-function rnotices_settings_page() {
-  // @see http://api.drupal.org/api/drupal/includes%21form.inc/function/drupal_get_form/7
-  $form = drupal_get_form('rnotices_settings');
-  return $form;
+function rnotices_settings_page()
+{
+	// @see http://api.drupal.org/api/drupal/includes%21form.inc/function/drupal_get_form/7
+	$form = drupal_get_form('rnotices_settings');
+
+	return $form;
 }
 
 /**
@@ -53,27 +57,30 @@ function rnotices_settings_page() {
  *
  * @param array $form
  * @param array $form_state
+ *
  * @return array
  */
-function rnotices_settings($form, &$form_state) {
-  $text = variable_get('rnotices_texts', '');
-  $form['rnotices_texts'] = array(
-    '#type' => 'textarea',
-    '#title' => t('Notice for ALL roles'),
-    '#default_value' => $text,
-    '#description' => t('Enter the text here!'),
-  );
+function rnotices_settings($form, &$form_state)
+{
+	$text                   = variable_get('rnotices_texts', '');
+	$form['rnotices_texts'] = array(
+		'#type'          => 'textarea',
+		'#title'         => t('Notice for ALL roles'),
+		'#default_value' => $text,
+		'#description'   => t('Enter the text here!'),
+	);
 
 
-  $form['submit'] = array(
-    '#type' => 'submit',
-    '#value' => 'Save Notices',
-  );
+	$form['submit'] = array(
+		'#type'  => 'submit',
+		'#value' => 'Save Notices',
+	);
 
-  return $form;
+	return $form;
 }
 
-function rnotices_settings_submit($form, &$form_state) {
-  $text = $form_state['values']['rnotices_texts'];
-  variable_set('rnotices_texts', $text);
+function rnotices_settings_submit($form, &$form_state)
+{
+	$text = $form_state['values']['rnotices_texts'];
+	variable_set('rnotices_texts', $text);
 }
