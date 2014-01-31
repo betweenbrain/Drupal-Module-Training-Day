@@ -1,0 +1,3 @@
+name = Spam Filter
+description = Filters out spam, duh.
+core = 7.x

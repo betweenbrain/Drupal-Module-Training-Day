@@ -1,0 +1,15 @@
+<?php
+
+function spam_filter_form_alter(&$form, &$form_state, &$form_id)
+{
+	$form['#validate'][] = 'spam_filer_node_form_validate';
+}
+
+function spam_filer_node_form_validate(&$form, &$form_state)
+{
+	$value = $form_state['values']['body'][LANGUAGE_NONE][0];
+	if (strpos($value, 'spam'))
+	{
+		form_set_error('body', t('spammy'));
+	}
+}
