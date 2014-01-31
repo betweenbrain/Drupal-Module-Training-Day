@@ -32,6 +32,7 @@ function rnotices_permission()
  */
 function rnotices_menu()
 {
+	// key of array tells drupal URL that I want to contol
 	$items['admin/people/rnotices'] = array(
 		'title'            => 'Role Notices',
 		'page callback'    => 'rnotices_page',
