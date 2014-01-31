@@ -73,7 +73,7 @@ function rnotices_settings($form, &$form_state)
  */
 function _rnotices_get_notices()
 {
-	global $user;
+	global $user; // user viewing page at the time
 	$all_notices  = variable_get('rnotices_texts', array());
 	$user_notices = array_intersect_key($all_notices, $user->roles);
 	foreach ($user_notices as &$notice)
