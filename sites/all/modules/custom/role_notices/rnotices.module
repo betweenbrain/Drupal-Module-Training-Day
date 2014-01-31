@@ -78,7 +78,7 @@ function _rnotices_get_notices()
 	$user_notices = array_intersect_key($all_notices, $user->roles); // notices displayed will be those having a key that match user roles
 	foreach ($user_notices as &$notice)
 	{
-		$notice = check_plain($notice);
+		$notice = check_plain($notice); // check_plain() strips out all html and code to make it plain text
 	}
 
 	return $user_notices;
