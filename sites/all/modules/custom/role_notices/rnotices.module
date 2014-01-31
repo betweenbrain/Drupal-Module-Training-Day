@@ -110,7 +110,7 @@ function rnotices_block_info()
  *
  * @return array
  */
-function rnotices_block_view($delta = '')
+function rnotices_block_view($delta = '') // Delta is the block being viewed, tested in switch
 {
 	switch ($delta)
 	{
