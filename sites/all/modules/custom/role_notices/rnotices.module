@@ -51,6 +51,7 @@ function rnotices_menu()
  */
 function rnotices_settings($form, &$form_state)
 {
+	// Default value is now an array as we have multiple textareas
 	$notices                = variable_get('rnotices_texts', array());
 	$roles                  = user_roles(true);
 	$form['rnotices_texts'] = array(
